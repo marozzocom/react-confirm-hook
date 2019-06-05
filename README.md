@@ -1,3 +1,6 @@
+# demo
+[Click here to see a live example](https://marozzocom.github.io/react-confirm-hook/)
+
 # hooks
 Examples of how to implement a confirm prompt using a class component with HOC or render props and a functional component with hooks.
 
