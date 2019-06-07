@@ -1,9 +1,9 @@
-import React from "react"
+import React, { useState } from "react"
 import { createPortal } from "react-dom"
-import { Dialog } from "./Dialog";
+import { Dialog } from "./Dialog"
 
 export const useConfirm = (callback: () => void, message: string) => {
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = useState(false)
   
     const confirm = () => {
       setIsOpen(true)
