@@ -1,6 +1,6 @@
 import React from "react"
 import { createPortal } from "react-dom"
-import { Dialog } from "./Dialog"
+import { Dialog } from "../shared/Dialog"
 
 interface IConfirmProps {
     message: string

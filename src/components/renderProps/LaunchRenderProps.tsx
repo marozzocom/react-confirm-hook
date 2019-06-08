@@ -1,5 +1,5 @@
 import React from "react"
-import { Confirm } from "./Confirm"
+import { Confirm } from "../shared/Confirm"
 
 interface ILaunchState {
     isLaunched: boolean

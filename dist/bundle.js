@@ -24803,10 +24803,268 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./src/components/Box.tsx":
-/*!********************************!*\
-  !*** ./src/components/Box.tsx ***!
-  \********************************/
+/***/ "./src/components/composition/ConfirmComposition.tsx":
+/*!***********************************************************!*\
+  !*** ./src/components/composition/ConfirmComposition.tsx ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var Dialog_1 = __webpack_require__(/*! ../shared/Dialog */ "./src/components/shared/Dialog.tsx");
+var Confirm = /** @class */ (function (_super) {
+    __extends(Confirm, _super);
+    function Confirm() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.cancel = function () {
+            var close = _this.props.close;
+            close();
+        };
+        _this.ok = function () {
+            var callback = _this.props.callback;
+            callback();
+        };
+        return _this;
+    }
+    Confirm.prototype.render = function () {
+        var message = this.props.message;
+        return react_1.default.createElement(react_1.default.Fragment, null, react_dom_1.createPortal(react_1.default.createElement(Dialog_1.Dialog, { message: message, ok: this.ok, cancel: this.cancel }), document.body));
+    };
+    return Confirm;
+}(react_1.default.Component));
+exports.Confirm = Confirm;
+
+
+/***/ }),
+
+/***/ "./src/components/composition/LaunchComposition.tsx":
+/*!**********************************************************!*\
+  !*** ./src/components/composition/LaunchComposition.tsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var ConfirmComposition_1 = __webpack_require__(/*! ./ConfirmComposition */ "./src/components/composition/ConfirmComposition.tsx");
+var Launch = /** @class */ (function (_super) {
+    __extends(Launch, _super);
+    function Launch(props) {
+        var _this = _super.call(this, props) || this;
+        _this.confirm = function () {
+            _this.setState({
+                showConfirm: true
+            });
+        };
+        _this.close = function () {
+            _this.setState({
+                showConfirm: false
+            });
+        };
+        _this.launch = function () {
+            _this.setState({
+                showConfirm: false,
+                isLaunched: true
+            });
+        };
+        _this.state = {
+            isLaunched: false,
+            showConfirm: false
+        };
+        return _this;
+    }
+    Launch.prototype.render = function () {
+        var _a = this.state, isLaunched = _a.isLaunched, showConfirm = _a.showConfirm;
+        return react_1.default.createElement(react_1.default.Fragment, null,
+            react_1.default.createElement("button", { onClick: this.confirm }, "Launch"),
+            showConfirm && react_1.default.createElement(ConfirmComposition_1.Confirm, { message: "Are you sure?", callback: this.launch, close: this.close }),
+            isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
+    };
+    return Launch;
+}(react_1.default.Component));
+exports.Launch = Launch;
+
+
+/***/ }),
+
+/***/ "./src/components/hook/LaunchHook.tsx":
+/*!********************************************!*\
+  !*** ./src/components/hook/LaunchHook.tsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var useConfirm_1 = __webpack_require__(/*! ./useConfirm */ "./src/components/hook/useConfirm.tsx");
+exports.Launch = function () {
+    var _a = react_1.useState(false), isLaunched = _a[0], setIsLaunched = _a[1];
+    var launch = function () {
+        setIsLaunched(true);
+    };
+    var _b = useConfirm_1.useConfirm(launch, "Are you sure?"), open = _b.open, Confirm = _b.Confirm;
+    return react_1.default.createElement(react_1.default.Fragment, null,
+        react_1.default.createElement(Confirm, null,
+            react_1.default.createElement("button", { onClick: open }, "Launch")),
+        isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
+    // Alternatively, you can also place the dialog the render of this component, if for example you wish to open it directly without a toggle component
+    // return <>
+    //     <button onClick={open}>Launch</button>
+    //     <Confirm />
+    //     {isLaunched && <img style={{ width: "300px" }} src="https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80" alt="Launch"/>}
+    // </>
+};
+
+
+/***/ }),
+
+/***/ "./src/components/hook/useConfirm.tsx":
+/*!********************************************!*\
+  !*** ./src/components/hook/useConfirm.tsx ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var Dialog_1 = __webpack_require__(/*! ../shared/Dialog */ "./src/components/shared/Dialog.tsx");
+exports.useConfirm = function (callback, message) {
+    var _a = react_1.useState(false), isOpen = _a[0], setIsOpen = _a[1];
+    var open = function () { return setIsOpen(true); };
+    var cancel = function () { return setIsOpen(false); };
+    var ok = function () {
+        setIsOpen(false);
+        callback();
+    };
+    var ConfirmDialog = function () { return react_dom_1.createPortal(react_1.default.createElement(Dialog_1.Dialog, { message: message, ok: ok, cancel: cancel }), document.body); };
+    var Confirm = function (props) { return react_1.default.createElement(react_1.default.Fragment, null,
+        props.children,
+        isOpen && react_1.default.createElement(ConfirmDialog, null)); };
+    return {
+        open: open,
+        Confirm: Confirm
+    };
+};
+
+
+/***/ }),
+
+/***/ "./src/components/renderProps/LaunchRenderProps.tsx":
+/*!**********************************************************!*\
+  !*** ./src/components/renderProps/LaunchRenderProps.tsx ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
+var Confirm_1 = __webpack_require__(/*! ../shared/Confirm */ "./src/components/shared/Confirm.tsx");
+var Launch = /** @class */ (function (_super) {
+    __extends(Launch, _super);
+    function Launch(props) {
+        var _this = _super.call(this, props) || this;
+        _this.launch = function () {
+            _this.setState({ isLaunched: true });
+        };
+        _this.state = {
+            isLaunched: false
+        };
+        return _this;
+    }
+    Launch.prototype.render = function () {
+        var isLaunched = this.state.isLaunched;
+        return (react_1.default.createElement(Confirm_1.Confirm, { message: "Are you sure?", callback: this.launch }, function (confirm) {
+            return react_1.default.createElement(react_1.default.Fragment, null,
+                react_1.default.createElement("button", { onClick: confirm }, "Launch"),
+                isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
+        }));
+    };
+    return Launch;
+}(react_1.default.Component));
+exports.Launch = Launch;
+
+
+/***/ }),
+
+/***/ "./src/components/shared/Box.tsx":
+/*!***************************************!*\
+  !*** ./src/components/shared/Box.tsx ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24832,10 +25090,10 @@ exports.Box = function (props) {
 
 /***/ }),
 
-/***/ "./src/components/Confirm.tsx":
-/*!************************************!*\
-  !*** ./src/components/Confirm.tsx ***!
-  \************************************/
+/***/ "./src/components/shared/Confirm.tsx":
+/*!*******************************************!*\
+  !*** ./src/components/shared/Confirm.tsx ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -24860,7 +25118,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var Dialog_1 = __webpack_require__(/*! ./Dialog */ "./src/components/Dialog.tsx");
+var Dialog_1 = __webpack_require__(/*! ./Dialog */ "./src/components/shared/Dialog.tsx");
 var Confirm = /** @class */ (function (_super) {
     __extends(Confirm, _super);
     function Confirm(props) {
@@ -24901,64 +25159,10 @@ exports.Confirm = Confirm;
 
 /***/ }),
 
-/***/ "./src/components/ConfirmComposition.tsx":
-/*!***********************************************!*\
-  !*** ./src/components/ConfirmComposition.tsx ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var Dialog_1 = __webpack_require__(/*! ./Dialog */ "./src/components/Dialog.tsx");
-var Confirm = /** @class */ (function (_super) {
-    __extends(Confirm, _super);
-    function Confirm() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.cancel = function () {
-            var close = _this.props.close;
-            close();
-        };
-        _this.ok = function () {
-            var callback = _this.props.callback;
-            callback();
-        };
-        return _this;
-    }
-    Confirm.prototype.render = function () {
-        var message = this.props.message;
-        return react_1.default.createElement(react_1.default.Fragment, null, react_dom_1.createPortal(react_1.default.createElement(Dialog_1.Dialog, { message: message, ok: this.ok, cancel: this.cancel }), document.body));
-    };
-    return Confirm;
-}(react_1.default.Component));
-exports.Confirm = Confirm;
-
-
-/***/ }),
-
-/***/ "./src/components/Dialog.tsx":
-/*!***********************************!*\
-  !*** ./src/components/Dialog.tsx ***!
-  \***********************************/
+/***/ "./src/components/shared/Dialog.tsx":
+/*!******************************************!*\
+  !*** ./src/components/shared/Dialog.tsx ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -25000,290 +25204,6 @@ exports.Dialog = function (props) {
 
 /***/ }),
 
-/***/ "./src/components/LaunchClassNoConfirm.tsx":
-/*!*************************************************!*\
-  !*** ./src/components/LaunchClassNoConfirm.tsx ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var Launch = /** @class */ (function (_super) {
-    __extends(Launch, _super);
-    function Launch(props) {
-        var _this = _super.call(this, props) || this;
-        _this.launch = function () {
-            _this.setState({
-                isLaunched: true
-            });
-        };
-        _this.state = {
-            isLaunched: false
-        };
-        return _this;
-    }
-    Launch.prototype.render = function () {
-        var isLaunched = this.state.isLaunched;
-        return react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("button", { onClick: this.launch }, "Launch"),
-            isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
-    };
-    return Launch;
-}(react_1.default.Component));
-exports.Launch = Launch;
-
-
-/***/ }),
-
-/***/ "./src/components/LaunchComposition.tsx":
-/*!**********************************************!*\
-  !*** ./src/components/LaunchComposition.tsx ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var ConfirmComposition_1 = __webpack_require__(/*! ./ConfirmComposition */ "./src/components/ConfirmComposition.tsx");
-var Launch = /** @class */ (function (_super) {
-    __extends(Launch, _super);
-    function Launch(props) {
-        var _this = _super.call(this, props) || this;
-        _this.confirm = function () {
-            _this.setState({
-                showConfirm: true
-            });
-        };
-        _this.close = function () {
-            _this.setState({
-                showConfirm: false
-            });
-        };
-        _this.launch = function () {
-            _this.setState({
-                showConfirm: false,
-                isLaunched: true
-            });
-        };
-        _this.state = {
-            isLaunched: false,
-            showConfirm: false
-        };
-        return _this;
-    }
-    Launch.prototype.render = function () {
-        var _a = this.state, isLaunched = _a.isLaunched, showConfirm = _a.showConfirm;
-        return react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("button", { onClick: this.confirm }, "Launch"),
-            showConfirm && react_1.default.createElement(ConfirmComposition_1.Confirm, { message: "Are you sure?", callback: this.launch, close: this.close }),
-            isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
-    };
-    return Launch;
-}(react_1.default.Component));
-exports.Launch = Launch;
-
-
-/***/ }),
-
-/***/ "./src/components/LaunchHook.tsx":
-/*!***************************************!*\
-  !*** ./src/components/LaunchHook.tsx ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var useConfirm_1 = __webpack_require__(/*! ./useConfirm */ "./src/components/useConfirm.tsx");
-exports.Launch = function () {
-    var _a = react_1.useState(false), isLaunched = _a[0], setIsLaunched = _a[1];
-    var launch = function () {
-        setIsLaunched(true);
-    };
-    var _b = useConfirm_1.useConfirm(launch, "Are you sure?"), confirm = _b.confirm, ConfirmDialog = _b.ConfirmDialog;
-    return react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("button", { onClick: confirm }, "Launch"),
-        react_1.default.createElement(ConfirmDialog, null),
-        isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
-};
-
-
-/***/ }),
-
-/***/ "./src/components/LaunchHookNoConfirm.tsx":
-/*!************************************************!*\
-  !*** ./src/components/LaunchHookNoConfirm.tsx ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-exports.Launch = function () {
-    var _a = react_1.useState(false), isLaunched = _a[0], setIsLaunched = _a[1];
-    var launch = function () {
-        setIsLaunched(true);
-    };
-    return react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement("button", { onClick: launch }, "Launch"),
-        isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
-};
-
-
-/***/ }),
-
-/***/ "./src/components/LaunchRenderProps.tsx":
-/*!**********************************************!*\
-  !*** ./src/components/LaunchRenderProps.tsx ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importDefault(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var Confirm_1 = __webpack_require__(/*! ./Confirm */ "./src/components/Confirm.tsx");
-var Launch = /** @class */ (function (_super) {
-    __extends(Launch, _super);
-    function Launch(props) {
-        var _this = _super.call(this, props) || this;
-        _this.launch = function () {
-            _this.setState({ isLaunched: true });
-        };
-        _this.state = {
-            isLaunched: false
-        };
-        return _this;
-    }
-    Launch.prototype.render = function () {
-        var isLaunched = this.state.isLaunched;
-        return (react_1.default.createElement(Confirm_1.Confirm, { message: "Are you sure?", callback: this.launch }, function (confirm) {
-            return react_1.default.createElement(react_1.default.Fragment, null,
-                react_1.default.createElement("button", { onClick: confirm }, "Launch"),
-                isLaunched && react_1.default.createElement("img", { style: { width: "300px" }, src: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80", alt: "Launch" }));
-        }));
-    };
-    return Launch;
-}(react_1.default.Component));
-exports.Launch = Launch;
-
-
-/***/ }),
-
-/***/ "./src/components/useConfirm.tsx":
-/*!***************************************!*\
-  !*** ./src/components/useConfirm.tsx ***!
-  \***************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var react_1 = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
-var react_dom_1 = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-var Dialog_1 = __webpack_require__(/*! ./Dialog */ "./src/components/Dialog.tsx");
-exports.useConfirm = function (callback, message) {
-    var _a = react_1.useState(false), isOpen = _a[0], setIsOpen = _a[1];
-    var confirm = function () {
-        setIsOpen(true);
-    };
-    var cancel = function () {
-        setIsOpen(false);
-    };
-    var ok = function () {
-        setIsOpen(false);
-        callback();
-    };
-    var ConfirmDialog = function () { return isOpen && react_dom_1.createPortal(react_1.default.createElement(Dialog_1.Dialog, { message: message, ok: ok, cancel: cancel }), document.body); };
-    return {
-        confirm: confirm,
-        ConfirmDialog: ConfirmDialog
-    };
-};
-
-
-/***/ }),
-
 /***/ "./src/index.tsx":
 /*!***********************!*\
   !*** ./src/index.tsx ***!
@@ -25303,21 +25223,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(__webpack_require__(/*! react */ "./node_modules/react/index.js"));
 var ReactDOM = __importStar(__webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js"));
-var Box_1 = __webpack_require__(/*! ./components/Box */ "./src/components/Box.tsx");
-var LaunchHook_1 = __webpack_require__(/*! ./components/LaunchHook */ "./src/components/LaunchHook.tsx");
-var LaunchRenderProps_1 = __webpack_require__(/*! ./components/LaunchRenderProps */ "./src/components/LaunchRenderProps.tsx");
-var LaunchComposition_1 = __webpack_require__(/*! ./components/LaunchComposition */ "./src/components/LaunchComposition.tsx");
-var LaunchHookNoConfirm_1 = __webpack_require__(/*! ./components/LaunchHookNoConfirm */ "./src/components/LaunchHookNoConfirm.tsx");
-var LaunchClassNoConfirm_1 = __webpack_require__(/*! ./components/LaunchClassNoConfirm */ "./src/components/LaunchClassNoConfirm.tsx");
+var Box_1 = __webpack_require__(/*! ./components/shared/Box */ "./src/components/shared/Box.tsx");
+var LaunchHook_1 = __webpack_require__(/*! ./components/hook/LaunchHook */ "./src/components/hook/LaunchHook.tsx");
+var LaunchRenderProps_1 = __webpack_require__(/*! ./components/renderProps/LaunchRenderProps */ "./src/components/renderProps/LaunchRenderProps.tsx");
+var LaunchComposition_1 = __webpack_require__(/*! ./components/composition/LaunchComposition */ "./src/components/composition/LaunchComposition.tsx");
 ReactDOM.render(React.createElement(React.Fragment, null,
-    React.createElement(Box_1.Box, { color: "#76b8c1" },
-        React.createElement(React.Fragment, null,
-            React.createElement(LaunchHookNoConfirm_1.Launch, null),
-            " Function component with hooks without confirm")),
-    React.createElement(Box_1.Box, { color: "#76b8c1" },
-        React.createElement(React.Fragment, null,
-            React.createElement(LaunchClassNoConfirm_1.Launch, null),
-            " Class component without confirm")),
     React.createElement(Box_1.Box, { color: "#faa" },
         React.createElement(React.Fragment, null,
             React.createElement(LaunchHook_1.Launch, null),
