@@ -8,7 +8,7 @@ import { Launch as LaunchComposition } from "./components/composition/LaunchComp
 
 ReactDOM.render(
     <>
-        <Box color="#faa"><><LaunchHook /> Function component with hooks and confirm</></Box>
+        <Box color="#faa"><><LaunchHook /> Function component with hooks</></Box>
         <Box><><LaunchRenderProps/> Class component with render props</></Box>
         <Box><><LaunchComposition/> Class component with composition</></Box>
     </>,
